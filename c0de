@@ -1,0 +1,61 @@
+#!bin/bash
+
+#config file#
+config=$1
+database=
+#config file# 
+
+#variables#
+EmployeeID=$id
+FirstName=$firstname
+LastName=$lastname
+ProScore=$proscore
+TechScore=$techscore 
+CommScore=$commscore
+#variables# 
+
+function menu() {
+  echo "Welcome to the Staff Appraisal System!" 
+  echo "OPTIONS"
+  echo "------------"
+  echo "1. View a user record." 
+  echo "2. Input a new record." 
+  echo "3. Exit" 
+} 
+
+function viewRecord () {
+  echo  "----------------------"
+  echo     "View Record" 
+  echo "-----------------------" 
+
+  read -p "Please enter staff ID" id  
+  echo $(egrep ^$id ~/appraisalsystem/work.db)
+}
+
+function enterRecord() {
+ read -p "Please enter staff ID " id 
+ read -p "Please enter first name " firstname 
+ read -p "Please enter last name " lastname 
+ read -p "Please enter professionalism score " proscore
+ read -p "Please enter technnical knowledge score " techscore
+ read -p "Please enter communication score " commscore
+ echo $id":"$firstname":"$lastname":"$proscore":"$techscore":"$commscore
+}
+
+menu
+read -p "Enter an option" option
+
+while [[ $option -ne 3 ]] 
+do 
+  if [ $option -eq 1 ] 
+    then 
+     viewRecord  
+
+  elif [ $option -eq 2 ] 
+    then
+     #result=enterRecord
+     enterRecord >> ~/appraisalsystem/work.db 
+fi
+menu 
+read -p "Enter an option" option
+done 
